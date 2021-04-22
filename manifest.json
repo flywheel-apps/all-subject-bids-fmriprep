@@ -1,0 +1,216 @@
+{
+  "name": "bids-app-template",
+  "label": "<Bids-App-Template>: short human-friendly name/description displayed in interface",
+  "description": "<editme Name> (<version>) longer description.",
+  "version": "0.0.0_0.15.0",
+  "custom": {
+    "docker-image": "flywheel/bids-app-template:0.0.0_0.15.0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/bids-app-template:0.0.0_0.15.0"
+    },
+    "flywheel": {
+      "suite": "BIDS Apps"
+    },
+    "license": {
+      "non-commercial-use-only": false,
+      "main": {
+        "name": "BSD-3-Clause",
+        "url": "https://github.com/poldracklab/mriqc/blob/0.15.1/LICENSE.txt"
+      },
+      "dependencies": [
+        {
+          "name": "Other",
+          "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+        },
+        {
+          "name": "Other",
+          "url": "https://github.com/ANTsX/ANTs/blob/v2.2.0/COPYING.txt"
+        },
+        {
+          "name": "Other",
+          "url": "https://afni.nimh.nih.gov/pub/dist/doc/program_help/README.copyright.html"
+        }
+      ]
+    }
+  },
+  "inputs": {
+    "key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "freesurfer_license": {
+      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+      "base": "file",
+      "optional": true
+    },
+    "bidsignore": {
+      "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+      "base": "file",
+      "optional": true
+    },
+    "go_file": {
+      "description": "Any kind of file that can be used in a Gear Rule to launch this gear when that file appears.  Use with the 'run_level' config option to force running at the project, subject, or session level.  The default is to run at the session level if not otherwise specified.",
+      "base": "file",
+      "optional": true
+    }
+  },
+  "config": {
+    "run_level": {
+      "description": "Force the gear to run a the project, subject, or session level.  This is required if the 'go_file' is being used in a Gear Rule to run the gear but it can be used when running the gear normally as well.",
+      "enum": [
+        "project",
+        "subject",
+        "session"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "bids_app_args": {
+      "description": "[arg1 [arg2 ...]]",
+      "default": "",
+      "type": "string"
+    },
+    "participant_label": {
+      "description": "[PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]]",
+      "optional": true,
+      "type": "string"
+    },
+    "run-id": {
+      "description": "[RUN_ID [RUN_ID ...]]",
+      "optional": true,
+      "type": "string"
+    },
+    "task-id": {
+      "description": "[TASK_ID [TASK_ID ...]]",
+      "optional": true,
+      "type": "string"
+    },
+    "modalities": {
+      "description": "T1w|bold|T2w",
+      "enum": [
+        "",
+        "T1w",
+        "bold",
+        "T2w"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "verbose": {
+      "default": "v",
+      "description": "increases log verbosity for each occurrence, debug level is -vvv",
+      "enum": [
+        "",
+        "v",
+        "vv",
+        "vvv"
+      ],
+      "type": "string"
+    },
+    "n_cpus": {
+      "description": "Number of CPUs/cores to use",
+      "optional": true,
+      "type": "integer"
+    },
+    "mem_gb": {
+      "description": "Maximum memory to use (GB)",
+      "optional": true,
+      "type": "integer"
+    },
+    "write-graph": {
+      "default": false,
+      "description": "Write workflow graph",
+      "type": "boolean"
+    },
+    "example-empty-param": {
+      "default": "",
+      "description": "This will be passed in as an empty string when the gear is run using the SDK even if it is not provided as a config when calling gear.run().",
+      "type": "string"
+    },
+    "example-bool-param": {
+      "default": false,
+      "description": "some yes or no choice",
+      "type": "boolean"
+    },
+    "example-num-things": {
+      "description": "number of things that is important to set",
+      "optional": true,
+      "type": "integer"
+    },
+    "example-name-or-something": {
+      "description": "path to JSON file with settings",
+      "optional": true,
+      "type": "string"
+    },
+    "example-threshold": {
+      "default": 3.1415926,
+      "description": "threshold eating pie",
+      "type": "number"
+    },
+    "ignore": {
+      "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)  Possible choices: fieldmaps, slicetiming, sbref",
+      "default": "",
+      "type": "string"
+    },
+    "gear-ignore-bids-errors": {
+      "default": false,
+      "description": "By default, the gear will not run if there are any BIDS errors detected.  Set this to run even if BIDS errors are detected",
+      "type": "boolean"
+    },
+    "gear-log-level": {
+      "default": "INFO",
+      "description": "Gear Log verbosity level (INFO|DEBUG)",
+      "type": "string",
+                        "enum": [
+                                "INFO",
+                                "DEBUG"
+                        ]
+    },
+    "gear-run-bids-validation": {
+      "default": true,
+      "description": "Gear will run BIDS validation after downloading data.  If validation fails <command> will NOT be run.",
+      "type": "boolean"
+    },
+    "gear-save-intermediate-output": {
+      "default": false,
+      "description": "Gear will save ALL intermediate output into <command>_work.zip",
+      "type": "boolean"
+    },
+    "gear-intermediate-files": {
+      "description": "Space separated list of FILES to retain from the intermediate work directory.",
+      "default": "",
+      "type": "string"
+    },
+    "gear-intermediate-folders": {
+      "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+      "default": "",
+      "type": "string"
+    },
+    "gear-dry-run": {
+      "default": false,
+      "description": "Do everything except actually executing <command>",
+      "type": "boolean"
+    },
+    "gear-keep-output": {
+      "default": false,
+      "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
+      "type": "boolean"
+    },
+    "gear-FREESURFER_LICENSE": {
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+      "type": "string",
+      "optional": true
+    }
+  },
+  "environment": {
+    "PYTHONUNBUFFERED": "1"
+  },
+  "command": "/usr/local/miniconda/bin/python run.py",
+  "author": "Dr. Smartypants, Whatsamatter U",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "cite": "Dewy, Cheetum, and How; The templatest BIDS app you will ever see; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+  "license": "MIT",
+  "source": "https://github.com/bids-apps/the-algorithm-run-by-the-gear",
+  "url": "https://github.com/flywheel-apps/bids-app-template"
+}
