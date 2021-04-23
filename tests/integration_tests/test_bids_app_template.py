@@ -6,8 +6,12 @@ import flywheel_gear_toolkit
 
 import run
 
+log = logging.getLogger(__name__)
 
-def test_bids_error_reports(caplog, install_gear, search_caplog):
+
+def test_run_works(
+    caplog, install_gear, un_install_gear, search_caplog_contains, search_caplog
+):
 
     caplog.set_level(logging.DEBUG)
 
@@ -15,13 +19,17 @@ def test_bids_error_reports(caplog, install_gear, search_caplog):
     if not user_json.exists():
         TestCase.skipTest("", f"No API key available in {str(user_json)}")
 
-    install_gear("bids_error.zip")
+    FWV0 = Path.cwd()
+
+    install_gear("bids_app_template.zip")
 
     with flywheel_gear_toolkit.GearToolkitContext(input_args=[]) as gtk_context:
 
         status = run.main(gtk_context)
 
-        assert status == 1
-        assert search_caplog(caplog, "bids-validator return code: 1")
-        assert search_caplog(caplog, "3 BIDS validation error(s) were detected")
-        assert search_caplog(caplog, "anat/sub-TOME3024_ses-Session2_acq-MPR_T1w.jsen")
+    assert status == 0
+    assert search_caplog(
+        caplog, "Not launching bids-fmriprep, running bids-app-template instead"
+    )
+
+    un_install_gear()

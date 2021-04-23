@@ -4,11 +4,27 @@ from pathlib import Path
 import pytest
 from flywheel_gear_toolkit.utils.zip_tools import unzip_archive
 
-from utils.singularity import run_in_tmp_dir
-
-run_in_tmp_dir()  # run all tests in /tmp/*/flywheel/v0 where * is random
-
 FWV0 = Path.cwd()
+
+
+def do_uninstall_gear():
+    print("\nRemoving previous gear...")
+
+    if Path(FWV0 / "config.json").exists():
+        Path(FWV0 / "config.json").unlink()
+
+    for dir_name in ["input", "output", "work", "freesurfer"]:
+        path = Path(FWV0 / dir_name)
+        if path.exists():
+            print(f"shutil.rmtree({str(path)}")
+            shutil.rmtree(path)
+
+
+@pytest.fixture
+def un_install_gear():
+    def _method():
+        do_uninstall_gear()
+    return _method
 
 
 @pytest.fixture
@@ -26,16 +42,7 @@ def install_gear():
         if not gear_tests.exists():  # fix for running in circleci
             gear_tests = FWV0 / "tests/data/gear_tests/"
 
-        print("\nRemoving previous gear...")
-
-        if Path(FWV0 / "config.json").exists():
-            Path(FWV0 / "config.json").unlink()
-
-        for dir_name in ["input", "output", "work", "freesurfer"]:
-            path = Path(FWV0 / dir_name)
-            if path.exists():
-                print(f"shutil.rmtree({str(path)}")
-                shutil.rmtree(path)
+        do_uninstall_gear()
 
         print(f'\ninstalling new gear, "{zip_name}"...')
         unzip_archive(gear_tests / zip_name, str(FWV0))
