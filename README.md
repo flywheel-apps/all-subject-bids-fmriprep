@@ -9,7 +9,6 @@ description of the configuration options, inputs and outputs of this gear.
 
 ### Note
 
-This gear was created from the Flywheel [BIDS App Template](https://github.com/flywheel-apps/bids-app-template) (version
-major#_minor#_patch#).  See the
+This gear was created from the Flywheel [BIDS App Template](https://github.com/flywheel-apps/bids-app-template).  See the
 [bids-app-template/README](https://github.com/flywheel-apps/bids-app-template/blob/master/README.md)
 for information on how to build this gear and run the tests.
