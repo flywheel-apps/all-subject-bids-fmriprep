@@ -2,12 +2,12 @@
   "name": "all-subject-bids-fmriprep",
   "label": "All-Subject BIDS fMRIPrep: Run BIDS fMRIPrep on all subjects in the project",
   "description": "See the description of BIDS fMRIPrep for version information.",
-  "version": "0.0.3",
+  "version": "1.0.1",
   "custom": {
-    "docker-image": "flywheel/all-subject-bids-fmriprep:0.0.3",
+    "docker-image": "flywheel/all-subject-bids-fmriprep:1.0.1",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/all-subject-bids-fmriprep:0.0.3"
+      "image": "flywheel/all-subject-bids-fmriprep:1.0.1"
     },
     "flywheel": {
       "suite": "BIDS Apps"

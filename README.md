@@ -1,4 +1,4 @@
-# all-subject-bids-fmreprep
+# all-subject-bids-fmriprep
 
 This gear runs the [BIDS fMRIPrep gear](https://github.com/flywheel-apps/bids-fmriprep) 
 with the same configuration on all subjects in the current project.
