@@ -7,6 +7,9 @@ See the [Overview](https://github.com/flywheel-apps/bids-fmriprep#overview)
 of the BIDS fMRIPrep gear to see how the data must be prepared and for a
 description of the configuration options, inputs and outputs of this gear.
 
+This gear has an extra option: gear-gear-to-run.  The default is, "bids-fmriprep".  This
+option is included to allow a custom-configured version of bids-fmriprep to be run.
+
 ### Note
 
 This gear was created from the Flywheel [BIDS App Template](https://github.com/flywheel-apps/bids-app-template).  See the
