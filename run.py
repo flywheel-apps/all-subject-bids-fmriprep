@@ -23,6 +23,7 @@ def main(gtk_context):
     fw = gtk_context.client
 
     gear_to_launch = gtk_context.config.get("gear-gear-to-run")
+    log.info("Launching %s...", gear_to_launch)
 
     if "gear-test-override-gear" in gtk_context.config:
         old_gear_to_launch = gear_to_launch
