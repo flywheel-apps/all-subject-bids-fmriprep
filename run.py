@@ -13,8 +13,6 @@ GEAR = "all-subject-bids-fmriprep"
 REPO = "flywheel-apps"
 CONTAINER = f"{REPO}/{GEAR}]"
 
-LAUNCH = "bids-fmriprep"
-
 
 def main(gtk_context):
 
@@ -24,10 +22,13 @@ def main(gtk_context):
 
     fw = gtk_context.client
 
-    gear_to_launch = LAUNCH
+    gear_to_launch = gtk_context.config.get("gear-gear-to-run")
+    log.info("Launching %s...", gear_to_launch)
+
     if "gear-test-override-gear" in gtk_context.config:
+        old_gear_to_launch = gear_to_launch
         gear_to_launch = gtk_context.config.get("gear-test-override-gear")
-        log.info("Not launching %s, running %s instead", LAUNCH, gear_to_launch)
+        log.info("Not launching %s, running %s instead", old_gear_to_launch, gear_to_launch)
 
     gear = fw.lookup(f"gears/{gear_to_launch}")
     log.info(f"{gear_to_launch} version = {gear.gear.version}")
